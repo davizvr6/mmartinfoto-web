@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local agent / tooling state
+.claude/
+
+# Logs
+*.log
+
+# OS temp
+Thumbs.db

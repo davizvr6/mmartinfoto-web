@@ -1,0 +1,993 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Diseño · Luz de Atardecer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F0E8;
+      --surface: #F8F4EE;
+      --accent: #8B6B4A;
+      --charcoal: #2C2520;
+      --gold: #C4A76B;
+      --text-primary: #2C2520;
+      --text-secondary: #7A6E62;
+      --text-muted: #B8AFA3;
+      --border: #D0C4B0;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Jost', -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+
+    /* Header */
+    header {
+      padding: 3rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .header-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .header-subtitle {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 600px;
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    /* Color Palette */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .color-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+    .color-swatch span {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      background: rgba(255,255,255,0.9);
+      color: var(--charcoal);
+    }
+
+    .color-info {
+      padding: 1rem;
+    }
+
+    .color-name {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .color-use {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    /* Typography Specimens */
+    .type-specimen {
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .type-specimen:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .type-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .type-meta-item {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .type-meta-item strong {
+      display: block;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .specimen-display {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .specimen-display-italic {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .specimen-body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 640px;
+    }
+
+    .specimen-body-light {
+      font-weight: 300;
+    }
+
+    .specimen-ui {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Type Scale */
+    .type-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .scale-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: baseline;
+      gap: 2rem;
+    }
+
+    .scale-size {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .scale-sample {
+      font-family: var(--font-display);
+      color: var(--text-primary);
+    }
+
+    .scale-sample.s-64 { font-size: 4rem; line-height: 1.05; }
+    .scale-sample.s-48 { font-size: 3rem; line-height: 1.1; }
+    .scale-sample.s-36 { font-size: 2.25rem; line-height: 1.15; }
+    .scale-sample.s-28 { font-size: 1.75rem; line-height: 1.2; }
+    .scale-sample.s-22 { font-size: 1.375rem; line-height: 1.3; }
+
+    /* Buttons */
+    .button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .button-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .button-demo-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1.5px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--charcoal);
+      color: var(--charcoal);
+    }
+
+    .btn-secondary:hover {
+      background: var(--charcoal);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .btn-small {
+      padding: 0.625rem 1.25rem;
+      font-size: 0.6875rem;
+    }
+
+    .btn-large {
+      padding: 1.125rem 2.5rem;
+      font-size: 0.8125rem;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-service {
+      text-align: center;
+      padding: 2.5rem 2rem;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1.5rem;
+      color: var(--accent);
+    }
+
+    .card-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 1;
+      fill: none;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .card-link {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .card-link:hover {
+      color: var(--charcoal);
+    }
+
+    /* Testimonial */
+    .card-testimonial {
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--gold);
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      line-height: 1;
+      opacity: 0.5;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .testimonial-avatar svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--text-muted);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .testimonial-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .testimonial-role {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Icons */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 2rem;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .icon-box svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--charcoal);
+      stroke-width: 1;
+      fill: none;
+    }
+
+    .icon-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Dark Block Demo */
+    .dark-block {
+      background: var(--charcoal);
+      padding: 4rem;
+      margin-top: 3rem;
+    }
+
+    .dark-block .section-label { color: var(--gold); }
+    .dark-block .section-title { color: #F5F0E8; }
+    .dark-block .section-desc { color: #B8AFA3; }
+
+    .dark-block .btn-primary {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--charcoal);
+    }
+
+    .dark-block .btn-primary:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    .dark-block .btn-secondary {
+      border-color: #F5F0E8;
+      color: #F5F0E8;
+    }
+
+    .dark-block .btn-secondary:hover {
+      background: #F5F0E8;
+      color: var(--charcoal);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .footer-text span {
+      color: var(--gold);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section { padding: 3rem 0; }
+      .scale-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .palette-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <p class="header-eyebrow">Sistema de Diseño</p>
+      <h1 class="header-title">Luz de Atardecer</h1>
+      <p class="header-subtitle">Identidad visual para fotografía artística. Elegancia editorial, calidez emocional, la imagen como protagonista absoluta.</p>
+    </header>
+
+    <!-- Paleta de Colores -->
+    <section>
+      <p class="section-label">Paleta de Color</p>
+      <h2 class="section-title">Tonos cálidos, luz natural</h2>
+      <p class="section-desc">Una paleta inspirada en la hora dorada. Fondos de pergamino, acentos de tierra y siena, detalles de oro discreto.</p>
+
+      <div class="palette-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background: #F5F0E8;">
+            <span>#F5F0E8</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Hueso Cálido</p>
+            <p class="color-use">Fondo general</p>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #F8F4EE;">
+            <span>#F8F4EE</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Pergamino Suave</p>
+            <p class="color-use">Superficies, cards</p>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #8B6B4A;">
+            <span style="background: rgba(255,255,255,0.95);">#8B6B4A</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Siena Cálido</p>
+            <p class="color-use">Acento principal, CTAs</p>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #2C2520;">
+            <span>#2C2520</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Carbón Oscuro</p>
+            <p class="color-use">Bloques dark, texto</p>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #C4A76B;">
+            <span style="background: rgba(255,255,255,0.95);">#C4A76B</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Dorado Discreto</p>
+            <p class="color-use">Detalles selectivos</p>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background: #D0C4B0;">
+            <span>#D0C4B0</span>
+          </div>
+          <div class="color-info">
+            <p class="color-name">Arena</p>
+            <p class="color-use">Separadores, bordes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Textos -->
+      <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+        <div>
+          <p class="section-label" style="margin-bottom: 1rem;">Texto Principal</p>
+          <p style="font-size: 1.25rem; color: #2C2520;">El instante perfecto</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">#2C2520</p>
+        </div>
+        <div>
+          <p class="section-label" style="margin-bottom: 1rem;">Texto Secundario</p>
+          <p style="font-size: 1.25rem; color: #7A6E62;">El instante perfecto</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">#7A6E62</p>
+        </div>
+        <div>
+          <p class="section-label" style="margin-bottom: 1rem;">Texto Suave</p>
+          <p style="font-size: 1.25rem; color: #B8AFA3;">El instante perfecto</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">#B8AFA3</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tipografía -->
+    <section>
+      <p class="section-label">Tipografía</p>
+      <h2 class="section-title">Serif editorial + Sans humanista</h2>
+      <p class="section-desc">Cormorant Garamond para titulares con presencia de revista. Jost para cuerpo de texto, UI y elementos funcionales.</p>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-meta-item">
+            <strong>Familia</strong>
+            Cormorant Garamond
+          </div>
+          <div class="type-meta-item">
+            <strong>Uso</strong>
+            Display, titulares
+          </div>
+          <div class="type-meta-item">
+            <strong>Pesos</strong>
+            400, 500, 600
+          </div>
+        </div>
+        <p class="specimen-display">Capturando la luz que permanece</p>
+        <p class="specimen-display-italic" style="margin-top: 1rem;">Donde cada imagen cuenta una historia</p>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <div class="type-meta-item">
+            <strong>Familia</strong>
+            Jost
+          </div>
+          <div class="type-meta-item">
+            <strong>Uso</strong>
+            Body, UI, botones
+          </div>
+          <div class="type-meta-item">
+            <strong>Pesos</strong>
+            300, 400, 500, 600
+          </div>
+        </div>
+        <p class="specimen-body">Más de cuatro décadas dedicadas a capturar momentos irrepetibles. Cada fotografía es una conversación entre la luz, el espacio y las emociones que habitan en ellos. Un trabajo artístico que trasciende el tiempo.</p>
+        <p class="specimen-body specimen-body-light" style="margin-top: 1rem;">Texto en weight 300. Ideal para descripciones largas y citas.</p>
+        <p class="specimen-ui" style="margin-top: 1.5rem;">Texto UI · Botones · Etiquetas · Navegación</p>
+      </div>
+
+      <!-- Escala tipográfica -->
+      <div class="type-scale" style="margin-top: 3rem;">
+        <p class="section-label" style="margin-bottom: 1.5rem;">Escala Tipográfica</p>
+        <div class="scale-row">
+          <span class="scale-size">64px</span>
+          <span class="scale-sample s-64">Aa</span>
+        </div>
+        <div class="scale-row">
+          <span class="scale-size">48px</span>
+          <span class="scale-sample s-48">Retratos</span>
+        </div>
+        <div class="scale-row">
+          <span class="scale-size">36px</span>
+          <span class="scale-sample s-36">Sesiones de estudio</span>
+        </div>
+        <div class="scale-row">
+          <span class="scale-size">28px</span>
+          <span class="scale-sample s-28">Fotografía documental</span>
+        </div>
+        <div class="scale-row">
+          <span class="scale-size">22px</span>
+          <span class="scale-sample s-22">Arquitectura e interiores</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botones -->
+    <section>
+      <p class="section-label">Sistema de Botones</p>
+      <h2 class="section-title">Interacciones elegantes</h2>
+      <p class="section-desc">Transiciones suaves. Sin gradientes, sin sombras de color. El primario invierte en hover; el secundario se rellena.</p>
+
+      <div class="button-grid">
+        <div class="button-demo">
+          <span class="button-demo-label">Primario</span>
+          <button class="btn btn-primary">Ver Galería</button>
+        </div>
+
+        <div class="button-demo">
+          <span class="button-demo-label">Secundario</span>
+          <button class="btn btn-secondary">Contactar</button>
+        </div>
+
+        <div class="button-demo">
+          <span class="button-demo-label">Ghost</span>
+          <button class="btn btn-ghost">Más información</button>
+        </div>
+      </div>
+
+      <div class="button-grid">
+        <div class="button-demo">
+          <span class="button-demo-label">Small</span>
+          <button class="btn btn-primary btn-small">Reservar</button>
+        </div>
+
+        <div class="button-demo">
+          <span class="button-demo-label">Default</span>
+          <button class="btn btn-primary">Ver Galería</button>
+        </div>
+
+        <div class="button-demo">
+          <span class="button-demo-label">Large</span>
+          <button class="btn btn-primary btn-large">Solicitar Presupuesto</button>
+        </div>
+      </div>
+
+      <!-- Dark block buttons -->
+      <div class="dark-block">
+        <p class="section-label">Sobre fondo oscuro</p>
+        <h3 class="section-title" style="font-size: 1.5rem;">Variantes para bloques de carbón</h3>
+        <p class="section-desc" style="margin-bottom: 2rem;">El dorado discreto aparece como acento principal sobre fondos oscuros.</p>
+
+        <div class="button-grid">
+          <div class="button-demo">
+            <span class="button-demo-label" style="color: var(--gold);">Primario Dark</span>
+            <button class="btn btn-primary">Agendar Sesión</button>
+          </div>
+
+          <div class="button-demo">
+            <span class="button-demo-label" style="color: var(--gold);">Secundario Dark</span>
+            <button class="btn btn-secondary">Ver Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards de Servicios -->
+    <section>
+      <p class="section-label">Cards de Servicios</p>
+      <h2 class="section-title">Componentes modulares</h2>
+      <p class="section-desc">Cards con iconografía de línea fina, jerarquía clara y enlaces sutiles.</p>
+
+      <div class="card-grid">
+        <div class="card card-service">
+          <div class="card-icon">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="20" r="8"/>
+              <path d="M24 32 C12 32 8 40 8 44 L40 44 C40 40 36 32 24 32Z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Retratos</h3>
+          <p class="card-desc">Sesiones personalizadas que capturan la esencia de cada persona. Luz natural, estudio o localizaciones con significado.</p>
+          <a href="#" class="card-link">Explorar →</a>
+        </div>
+
+        <div class="card card-service">
+          <div class="card-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="6" y="14" width="36" height="24" rx="2"/>
+              <circle cx="24" cy="26" r="7"/>
+              <circle cx="24" cy="26" r="3"/>
+              <rect x="10" y="18" width="4" height="3" rx="0.5"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Eventos</h3>
+          <p class="card-desc">Cobertura documental de bodas, celebraciones y eventos corporativos. Momentos auténticos, sin poses forzadas.</p>
+          <a href="#" class="card-link">Explorar →</a>
+        </div>
+
+        <div class="card card-service">
+          <div class="card-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="8" y="8" width="32" height="32" rx="1"/>
+              <line x1="8" y1="16" x2="40" y2="16"/>
+              <line x1="8" y1="32" x2="40" y2="32"/>
+              <line x1="16" y1="8" x2="16" y2="40"/>
+              <line x1="32" y1="8" x2="32" y2="40"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Arquitectura</h3>
+          <p class="card-desc">Espacios que cuentan historias. Fotografía de interiores, exteriores y proyectos arquitectónicos con precisión técnica.</p>
+          <a href="#" class="card-link">Explorar →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section>
+      <p class="section-label">Testimonios</p>
+      <h2 class="section-title">Voces de clientes</h2>
+      <p class="section-desc">Cards de cita con comillas doradas, tipografía serif en itálica para el texto emocional.</p>
+
+      <div class="card-grid" style="margin-top: 2rem;">
+        <div class="card card-testimonial">
+          <p class="testimonial-quote">Cada fotografía captura exactamente lo que sentíamos en ese momento. No son solo imágenes, son recuerdos vivos que atesoramos.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M12 14 C6 14 4 18 4 20 L20 20 C20 18 18 14 12 14Z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="testimonial-name">María González</p>
+              <p class="testimonial-role">Boda en Toledo, 2024</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-testimonial">
+          <p class="testimonial-quote">Profesionalidad absoluta y una sensibilidad artística que transforma cada sesión en una experiencia única. Un verdadero maestro de la luz.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M12 14 C6 14 4 18 4 20 L20 20 C20 18 18 14 12 14Z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="testimonial-name">Carlos Ruiz</p>
+              <p class="testimonial-role">Director Creativo, Estudio Arq</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Iconografía -->
+    <section>
+      <p class="section-label">Iconografía</p>
+      <h2 class="section-title">Línea fina, trazo elegante</h2>
+      <p class="section-desc">Iconos con stroke-width de 1px. Sin rellenos, sin efectos. Claridad ante todo.</p>
+
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <rect x="4" y="8" width="24" height="18" rx="2"/>
+              <circle cx="16" cy="17" r="5"/>
+              <circle cx="16" cy="17" r="2"/>
+              <rect x="7" y="11" width="3" height="2" rx="0.5"/>
+            </svg>
+          </div>
+          <span class="icon-label">Cámara</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <rect x="5" y="5" width="22" height="22" rx="1"/>
+              <polyline points="5 22 11 16 16 20 22 13 27 17"/>
+              <circle cx="22" cy="11" r="2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Galería</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="10"/>
+              <polyline points="16 10 16 16 21 19"/>
+            </svg>
+          </div>
+          <span class="icon-label">Horario</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <path d="M16 4 L16 4 C10 4 5 9 5 15 C5 23 16 28 16 28 C16 28 27 23 27 15 C27 9 22 4 16 4Z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Ubicación</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <rect x="5" y="7" width="22" height="18" rx="1"/>
+              <polyline points="5 10 16 18 27 10"/>
+            </svg>
+          </div>
+          <span class="icon-label">Contacto</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <path d="M6 6 L26 6 L26 26 L6 26 Z M6 6 L16 16 L6 26 M26 6 L16 16 L26 26"/>
+            </svg>
+          </div>
+          <span class="icon-label">Estudio</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <circle cx="16" cy="12" r="6"/>
+              <path d="M16 20 C8 20 4 25 4 28 L28 28 C28 25 24 20 16 20Z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Retrato</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-box">
+            <svg viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="11"/>
+              <path d="M16 8 L16 16 L22 16"/>
+              <circle cx="16" cy="16" r="2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Duración</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="footer-text">Sistema de diseño <span>Luz de Atardecer</span> · Madrid</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
